@@ -1,15 +1,15 @@
 #!/bin/bash
 
 FONCCONTROL () {
-	if [[ $("$CMDUNAME" -m) == x86_64 ]] && [[ "$VERSION" = 10.* ]] || [[ "$VERSION" = 11.* ]]; then
-		if [ "$("$CMDID" -u)" -ne 0 ]; then
-			"$CMDECHO" ""; set "100"; FONCTXT "$1"; "$CMDECHO" -e "${CRED}$TXT1${CEND}"; "$CMDECHO" ""
-			exit 1
-		fi
-	else
-		"$CMDECHO" ""; set "130"; FONCTXT "$1"; "$CMDECHO" -e "${CRED}$TXT1${CEND}"; "$CMDECHO" ""
-		exit 1
-	fi
+if [[ $("$CMDUNAME" -m) == x86_64 ]] && [[ "$VERSION" = 10.* ]] || [[ "$VERSION" = 11.* ]]; then
+if [ "$("$CMDID" -u)" -ne 0 ]; then
+	"$CMDECHO" ""; set "100"; FONCTXT "$1"; "$CMDECHO" -e "${CRED}$TXT1${CEND}"; "$CMDECHO" ""
+exit 1
+fi
+else
+	"$CMDECHO" ""; set "130"; FONCTXT "$1"; "$CMDECHO" -e "${CRED}$TXT1${CEND}"; "$CMDECHO" ""
+exit 1
+fi
 }
 
 FONCBASHRC () {
@@ -23,7 +23,7 @@ FONCUSER () {
 while :; do
 		set "214"; FONCTXT "$1"; "$CMDECHO" -e "${CGREEN}$TXT1 ${CEND}"
 		read -r TESTUSER
-		"$CMDGREP" -w "$TESTUSER" /etc/passwd &> /dev/null
+	"$CMDGREP" -w "$TESTUSER" /etc/passwd &> /dev/null
 if [ $? -eq 1 ]; then
 if [[ "$TESTUSER" =~ ^[a-z0-9]{3,}$ ]]; then
 		USER="$TESTUSER"
