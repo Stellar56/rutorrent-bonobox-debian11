@@ -38,30 +38,30 @@ elif [[ "$CMDBACKUP" == stretch ]]; then
     DATE=$("$CMDDATE" '+%d-%m-%y-a-%Hh%Mm%Ss')
 fi
 
-		# fonction backup : exige un paramètre -> nom du user
+# fonction backup : exige un paramètre -> nom du user
 FONCBACKUP () {
-if [ ! "$1" ]; then
-exit 1
-fi
+    if [ ! "$1" ]; then
+        exit 1
+    fi
 
     REPERTOIREUSER=/home/"$1"/.backup-session
 
-if [ ! -d "$REPERTOIREUSER" ]; then
-    "$CMDMKDIR" /home/"$1"/.backup-session
-    "$CMDCHOWN" -R "$1":"$1" /home/"$1"/.backup-session
-fi
+    if [ ! -d "$REPERTOIREUSER" ]; then
+        "$CMDMKDIR" /home/"$1"/.backup-session
+        "$CMDCHOWN" -R "$1":"$1" /home/"$1"/.backup-session
+    fi
 
     "$CMDMKDIR" /home/"$1"/.backup-session/Sauvegarde-du-"$DATE"
     "$CMDCP" /home/"$1"/.session/*.torrent /home/"$1"/.session/*.rtorrent /home/"$1"/.session/*.libtorrent_resume /home/"$1"/.backup-session/Sauvegarde-du-*
-		cd /home/"$1"/.backup-session || exit
+    cd /home/"$1"/.backup-session || exit
     "$CMDZIP" -qr sauvegarde-du-"$("$CMDDATE" '+%d-%m-%y-a-%Hh%Mm%Ss')".zip Sauvegarde-du-*
     "$CMDRM" -Rf /home/"$1"/.backup-session/Sauvegarde-du-*
     "$CMDCHOWN" -R "$1":"$1" /home/"$1"/.backup-session
-		COMPTAGE=$("$CMDLS" | "$CMDGREP" sauvegarde | "$CMDWC" -l)
+    COMPTAGE=$("$CMDLS" | "$CMDGREP" sauvegarde | "$CMDWC" -l)
 
-if [ "$COMPTAGE" -gt "$NBSAVE" ]; then
-    "$CMDRM" -Rf "$("$CMDLS" -at /home/"$1"/.backup-session/ | "$CMDGREP" sauvegarde | "$CMDTAIL" -1)"
-fi
+    if [ "$COMPTAGE" -gt "$NBSAVE" ]; then
+        "$CMDRM" -Rf "$("$CMDLS" -at /home/"$1"/.backup-session/ | "$CMDGREP" sauvegarde | "$CMDTAIL" -1)"
+    fi
 }
 # liste users
 exit 0

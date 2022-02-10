@@ -17,10 +17,10 @@ INCLUDES="/tmp/rutorrent-bonobox-debian11/includes"
 . "$INCLUDES"/functions.sh
 
 FONCCONTROL
-"$CMDECHO" "";
-set "266"; FONCTXT "$1"; "$CMDECHO" -e "${CBLUE}$TXT1${CEND} "
-set "214"; FONCTXT "$1"; "$CMDECHO" -e -n "${CGREEN}$TXT1 ${CEND} "
-read -r USERNAME
+	"$CMDECHO" "";
+		set "266"; FONCTXT "$1"; "$CMDECHO" -e "${CBLUE}$TXT1${CEND} "
+		set "214"; FONCTXT "$1"; "$CMDECHO" -e -n "${CGREEN}$TXT1 ${CEND} "
+		read -r USERNAME
 
 if [[ $("$CMDGREP" "$USERNAME:" -c /etc/shadow) != "1" ]]; then
 	set "199"; FONCTXT "$1"; "$CMDECHO" -e "${CRED}$TXT1${CEND}"
@@ -48,6 +48,7 @@ done
 		## rTorrent Activity
 		.......................................................................................................................................
 EOF
+
 	"$CMDECHO" -e "$("$CMDPS" uU "$USERNAME" | "$CMDGREP" -e rtorrent)" >> "$RAPPORT"
 
 "$CMDCAT" <<-EOF >> "$RAPPORT"
@@ -122,7 +123,7 @@ fi
 	FONCRAPPORT /etc/init.d/"$USERNAME"-rtorrent "$USERNAME"-rtorrent 1
 
 		cd "$NGINXENABLE" || exit
-	for VHOST in $("$CMDLS")
+		for VHOST in $("$CMDLS")
 do
 		FONCRAPPORT "$NGINXENABLE"/"$VHOST" "$VHOST" 1
 done
@@ -134,7 +135,7 @@ fi
 	FONCRAPPORT "$NGINX"/nginx.conf nginx.conf 1
 
 		cd "$NGINXCONFD" || exit
-	for CONF_D in $("$CMDLS")
+		for CONF_D in $("$CMDLS")
 do
 		FONCRAPPORT "$NGINXCONFD"/"$CONF_D" "$CONF_D" 1
 done
@@ -158,10 +159,10 @@ EOF
 EOF
 	"$CMDECHO" "" >> "$RAPPORT"
 
-	cd "$NGINXSSL" || exit
-	for SSL in $("$CMDLS")
+		cd "$NGINXSSL" || exit
+		for SSL in $("$CMDLS")
 do
-	"$CMDECHO" "$SSL" >> "$RAPPORT"
+		"$CMDECHO" "$SSL" >> "$RAPPORT"
 done
 
 	FONCRAPPORT /var/log/nginx/rutorrent-error.log nginx.log 1
@@ -171,7 +172,6 @@ done
 		## end
 		.......................................................................................................................................
 EOF
-
 	FONCGENRAPPORT
 	"$CMDECHO" ""
 fi
